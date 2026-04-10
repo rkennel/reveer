@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reveer — Screen Flow &amp; UX Specification</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+
+  .page { max-width: 1000px; margin: 0 auto; padding: 48px 32px 80px; }
+
+  .doc-header { margin-bottom: 40px; padding-bottom: 24px; border-bottom: 0.5px solid #e0e0e0; }
+  .doc-title { font-size: 28px; font-weight: 500; color: #1a1a1a; margin-bottom: 6px; }
+  .doc-subtitle { font-size: 15px; color: #888; margin-bottom: 16px; }
+  .doc-meta { display: flex; gap: 24px; flex-wrap: wrap; }
+  .doc-meta span { font-size: 13px; color: #aaa; }
+  .doc-meta strong { color: #555; font-weight: 500; }
+
+  .section-title { font-size: 11px; font-weight: 500; color: #aaa; letter-spacing: 0.08em; text-transform: uppercase; margin: 48px 0 24px; }
+
+  .legend { display: flex; gap: 24px; flex-wrap: wrap; padding: 16px 20px; background: white; border-radius: 12px; margin-bottom: 40px; border: 0.5px solid #e8e8e8; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #555; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  .primary-flow { display: flex; align-items: flex-start; gap: 0; margin-bottom: 64px; overflow-x: auto; padding-bottom: 8px; }
+
+  .flow-col { display: flex; flex-direction: column; align-items: center; gap: 14px; flex-shrink: 0; }
+
+  .arrow-col { display: flex; align-items: center; justify-content: center; padding-top: 180px; width: 56px; flex-shrink: 0; }
+
+  .screen-badge { display: flex; align-items: center; gap: 8px; }
+  .screen-num { width: 24px; height: 24px; border-radius: 50%; background: #1a73e8; color: white; font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .screen-num.edge { background: #e8a020; }
+  .screen-num.opt { background: #888; }
+  .screen-label { font-size: 12px; font-weight: 500; color: #1a73e8; letter-spacing: 0.05em; text-transform: uppercase; }
+  .screen-label.edge { color: #e8a020; }
+  .screen-label.opt { color: #888; }
+
+  .phone { width: 180px; background: #f0f0ea; border-radius: 26px; border: 0.5px solid #bbb; overflow: hidden; flex-shrink: 0; }
+  .phone-sb { display: flex; justify-content: space-between; align-items: center; padding: 8px 14px 4px; font-size: 9px; font-weight: 500; color: #333; }
+  .map-area { background: #dfe1d0; position: relative; overflow: hidden; }
+  .sheet { background: white; border-radius: 14px 14px 0 0; border-top: 0.5px solid #e0e0e0; padding: 8px 12px 14px; }
+  .handle { width: 24px; height: 3px; background: #ddd; border-radius: 2px; margin: 0 auto 10px; }
+
+  .dest-row { display: flex; align-items: center; gap: 7px; margin-bottom: 9px; }
+  .dest-dot { width: 22px; height: 22px; border-radius: 50%; background: #e6f1fb; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .dest-name { font-size: 10px; font-weight: 500; color: #1a1a1a; }
+  .dest-addr { font-size: 8px; color: #999; margin-top: 1px; }
+
+  .stat-pills { display: flex; gap: 5px; margin-bottom: 9px; }
+  .stat-pill { flex: 1; background: #f5f5f5; border-radius: 7px; padding: 6px 4px; text-align: center; }
+  .stat-val { font-size: 12px; font-weight: 500; color: #1a1a1a; font-family: 'DM Mono', monospace; }
+  .stat-unit { font-size: 8px; color: #aaa; }
+
+  .badge-new { display: inline-flex; align-items: center; gap: 3px; background: #e6f1fb; color: #0c447c; border-radius: 6px; font-size: 9px; padding: 3px 8px; margin-bottom: 9px; border: 0.5px solid #b5d4f4; }
+  .badge-used { display: inline-flex; align-items: center; gap: 3px; background: #f1efe8; color: #5f5e5a; border-radius: 6px; font-size: 9px; padding: 3px 8px; margin-bottom: 9px; border: 0.5px solid #d3d1c7; }
+
+  .btn-primary { width: 100%; padding: 8px 0; border-radius: 9px; background-color: #1a73e8; color: white; font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; text-align: center; margin-bottom: 6px; border: none; cursor: pointer; }
+  .btn-secondary { width: 100%; padding: 7px 0; border-radius: 9px; border: 0.5px solid #d0d0d0; background: white; font-size: 10px; color: #333; text-align: center; font-family: 'DM Sans', sans-serif; cursor: pointer; }
+  .btn-danger { width: 100%; padding: 7px 0; border-radius: 9px; border: 0.5px solid #f0c0c0; background: white; font-size: 10px; color: #a32d2d; text-align: center; font-family: 'DM Sans', sans-serif; cursor: pointer; margin-top: 6px; }
+
+  .warn-banner { display: flex; align-items: flex-start; gap: 5px; background: #faeeda; border: 0.5px solid #f0c070; border-radius: 7px; padding: 7px 8px; margin-bottom: 7px; font-size: 9px; color: #633806; line-height: 1.5; }
+
+  .annotation { background: white; border: 0.5px solid #e8e8e8; border-radius: 12px; padding: 12px 14px; font-size: 12px; color: #555; line-height: 1.6; max-width: 180px; text-align: center; }
+  .annotation strong { display: block; font-weight: 500; color: #1a1a1a; margin-bottom: 4px; font-size: 13px; }
+  .annotation.warn { background: #fffbf0; border-color: #f0d080; color: #7a5500; }
+  .annotation.warn strong { color: #5a3c00; }
+
+  .branch-row { display: flex; gap: 40px; flex-wrap: wrap; margin-bottom: 48px; }
+
+  .branch-note { font-size: 11px; color: #aaa; margin-bottom: 6px; }
+
+  .section-chip { font-size: 8px; font-weight: 500; color: #aaa; letter-spacing: 0.06em; text-transform: uppercase; margin: 8px 0 4px; }
+
+  .settings-card { background: white; border-radius: 9px; border: 0.5px solid #e8e8e8; padding: 7px 9px; margin-bottom: 7px; }
+  .settings-row { display: flex; align-items: center; justify-content: space-between; padding: 4px 0; border-bottom: 0.5px solid #f5f5f5; }
+  .settings-row:last-child { border-bottom: none; }
+  .settings-label { font-size: 9px; color: #1a1a1a; }
+  .settings-val { font-size: 9px; color: #888; font-family: 'DM Mono', monospace; }
+
+  .stepper { display: flex; align-items: center; border: 0.5px solid #ddd; border-radius: 6px; overflow: hidden; }
+  .stepper-btn { width: 18px; height: 18px; background: #f5f5f5; font-size: 12px; color: #555; display: flex; align-items: center; justify-content: center; }
+  .stepper-val { width: 24px; text-align: center; font-size: 9px; font-family: 'DM Mono', monospace; border-left: 0.5px solid #e8e8e8; border-right: 0.5px solid #e8e8e8; padding: 3px 0; background: white; color: #1a1a1a; }
+
+  .history-bar-track { height: 4px; background: #f0f0f0; border-radius: 2px; overflow: hidden; margin: 4px 0 6px; }
+  .history-bar-fill { height: 100%; background: #1a73e8; border-radius: 2px; }
+  .pill-row { display: flex; gap: 4px; flex-wrap: wrap; }
+  .pill { background: #f0f0f0; border-radius: 10px; padding: 2px 7px; font-size: 8px; color: #555; }
+  .pill.old { color: #aaa; }
+
+  .handoff-screen { background: #1a73e8; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px 20px; gap: 14px; }
+
+  .search-bar { display: flex; align-items: center; gap: 6px; background: white; border-radius: 9px; border: 0.5px solid #ddd; padding: 6px 10px; margin: 8px 10px 0; }
+  .search-placeholder { font-size: 10px; color: #aaa; }
+
+  .recent-item { display: flex; align-items: center; gap: 7px; padding: 5px 10px; }
+  .recent-dot { width: 18px; height: 18px; border-radius: 50%; background: #f0f0f0; flex-shrink: 0; }
+
+  .notes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .note-card { background: white; border: 0.5px solid #e8e8e8; border-radius: 12px; padding: 18px 20px; }
+  .note-card-title { font-size: 14px; font-weight: 500; color: #1a1a1a; margin-bottom: 8px; }
+  .note-card-body { font-size: 13px; color: #666; line-height: 1.7; }
+
+  .footer { margin-top: 64px; padding-top: 24px; border-top: 0.5px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap; }
+  .footer-left { font-size: 13px; color: #aaa; }
+  .footer-right { font-size: 13px; color: #aaa; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="doc-header">
+    <div class="doc-title">Reveer</div>
+    <div class="doc-subtitle">Veer off autopilot</div>
+    <div class="doc-meta">
+      <span><strong>Version</strong> 1.3</span>
+      <span><strong>Date</strong> April 9, 2026</span>
+      <span><strong>Screens</strong> 5</span>
+      <span><strong>Status</strong> Draft</span>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#1a73e8;"></div>Primary flow</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#e8a020;"></div>Edge case</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#888;"></div>Optional / branching</div>
+  </div>
+
+  <div class="section-title">Primary flow</div>
+
+  <div class="primary-flow">
+
+    <!-- Screen 1: Home -->
+    <div class="flow-col">
+      <div class="screen-badge">
+        <div class="screen-num">1</div>
+        <div class="screen-label">Home</div>
+      </div>
+      <div class="phone">
+        <div class="phone-sb"><span>9:41</span><span>●●●</span></div>
+        <div class="map-area" style="height:168px;">
+          <svg width="100%" height="100%" viewBox="0 0 180 168" preserveAspectRatio="none">
+            <rect x="0" y="65" width="180" height="7" fill="#f5f3ea" stroke="#ccc9b3" stroke-width="0.4"/>
+            <rect x="0" y="112" width="180" height="7" fill="#f5f3ea" stroke="#ccc9b3" stroke-width="0.4"/>
+            <rect x="62" y="0" width="9" height="168" fill="#fff" stroke="#bbb89f" stroke-width="0.5"/>
+            <rect x="124" y="0" width="7" height="168" fill="#f5f3ea" stroke="#ccc9b3" stroke-width="0.4"/>
+            <rect x="22" y="20" width="28" height="33" rx="2" fill="#cac8b5"/>
+            <rect x="78" y="14" width="32" height="40" rx="2" fill="#c8d9b0"/>
+            <rect x="140" y="76" width="32" height="28" rx="2" fill="#cac8b5"/>
+            <rect x="22" y="88" width="28" height="20" rx="2" fill="#cac8b5"/>
+            <rect x="85" y="82" width="26" height="22" rx="2" fill="#cac8b5"/>
+            <path d="M28,168 L28,118 L62,118 L62,70 L112,70 L112,118 L147,118 L147,168" stroke="#1a73e8" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+            <circle cx="28" cy="168" r="5" fill="#1a73e8" opacity="0.85"/>
+            <circle cx="28" cy="168" r="2.5" fill="white"/>
+            <circle cx="147" cy="118" r="7" fill="#1a73e8"/>
+            <circle cx="147" cy="118" r="4" fill="white"/>
+            <circle cx="147" cy="118" r="2" fill="#1a73e8"/>
+          </svg>
+          <div class="search-bar">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><circle cx="5" cy="5" r="3.5" stroke="#aaa" stroke-width="1.3"/><path d="M8 8l2.5 2.5" stroke="#aaa" stroke-width="1.3" stroke-linecap="round"/></svg>
+            <div class="search-placeholder">Where to?</div>
+          </div>
+        </div>
+        <div style="background:#f8f8f8;padding:8px 0 10px;">
+          <div style="font-size:8px;color:#aaa;letter-spacing:0.06em;text-transform:uppercase;padding:0 10px;margin-bottom:4px;">Recent</div>
+          <div class="recent-item">
+            <div class="recent-dot"></div>
+            <div><div style="font-size:9px;font-weight:500;color:#1a1a1a;">Anthropic HQ</div><div style="font-size:8px;color:#aaa;">760 Market St, SF</div></div>
+          </div>
+          <div class="recent-item">
+            <div class="recent-dot"></div>
+            <div><div style="font-size:9px;font-weight:500;color:#1a1a1a;">Oakland Whole Foods</div><div style="font-size:8px;color:#aaa;">230 Bay Place, Oakland</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="annotation">
+        <strong>Entry point</strong>
+        Full-screen map with floating search bar. Settings gear icon top-right.
+      </div>
+    </div>
+
+    <!-- Arrow 1→2 -->
+    <div class="arrow-col">
+      <svg width="56" height="24" viewBox="0 0 56 24" fill="none">
+        <path d="M4 12 H48" stroke="#1a73e8" stroke-width="1.5"/>
+        <path d="M42 7l8 5-8 5" stroke="#1a73e8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </div>
+
+    <!-- Screen 2: Route Preview -->
+    <div class="flow-col">
+      <div class="screen-badge">
+        <div class="screen-num">2</div>
+        <div class="screen-label">Route preview</div>
+      </div>
+      <div class="phone">
+        <div class="phone-sb"><span>9:41</span><span>●●●</span></div>
+        <div class="map-area" style="height:148px;">
+          <svg width="100%" height="100%" viewBox="0 0 180 148" preserveAspectRatio="none">
+            <rect x="0" y="55" width="180" height="7" fill="#f5f3ea" stroke="#ccc9b3" stroke-width="0.4"/>
+            <rect x="0" y="108" width="180" height="9" fill="#fff" stroke="#bbb89f" stroke-width="0.5"/>
+            <rect x="62" y="0" width="9" height="148" fill="#fff" stroke="#bbb89f" stroke-width="0.5"/>
+            <rect x="124" y="0" width="7" height="148" fill="#f5f3ea" stroke="#ccc9b3" stroke-width="0.4"/>
+            <rect x="22" y="10" width="28" height="32" rx="2" fill="#cac8b5"/>
+            <rect x="78" y="6" width="32" height="36" rx="2" fill="#c8d9b0"/>
+            <rect x="140" y="62" width="32" height="30" rx="2" fill="#cac8b5"/>
+            <path d="M28,148 L28,112 L62,112 L62,59 L112,59 L112,112 L147,112 L147,148" stroke="#1a73e8" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="28" cy="148" r="5" fill="#1a73e8"/>
+            <circle cx="28" cy="148" r="2.5" fill="white"/>
+            <circle cx="147" cy="112" r="7" fill="#1a73e8"/>
+            <circle cx="147" cy="112" r="4" fill="white"/>
+            <circle cx="147" cy="112" r="2" fill="#1a73e8"/>
+          </svg>
+        </div>
+        <div class="sheet">
+          <div class="handle"></div>
+          <div class="dest-row">
+            <div class="dest-dot"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M6 1C4 1 2.5 2.5 2.5 4.3C2.5 6.6 6 11 6 11C6 11 9.5 6.6 9.5 4.3C9.5 2.5 8 1 6 1ZM6 5.8C5.2 5.8 4.5 5.1 4.5 4.3C4.5 3.5 5.2 2.8 6 2.8C6.8 2.8 7.5 3.5 7.5 4.3C7.5 5.1 6.8 5.8 6 5.8Z" fill="#1a73e8"/></svg></div>
+            <div><div class="dest-name">Anthropic HQ</div><div class="dest-addr">760 Market St, SF</div></div>
+          </div>
+          <div class="stat-pills">
+            <div class="stat-pill"><div class="stat-val">24</div><div class="stat-unit">min</div></div>
+            <div class="stat-pill"><div class="stat-val">8.3</div><div class="stat-unit">miles</div></div>
+            <div class="stat-pill"><div class="stat-val">10:05</div><div class="stat-unit">arrival</div></div>
+          </div>
+          <div class="badge-new">New route</div>
+          <div class="btn-primary" style="color:white;">Start in Google Maps</div>
+          <div class="btn-secondary">Try a different route</div>
+        </div>
+      </div>
+      <div class="annotation">
+        <strong>Normal state</strong>
+        Stats, "New route" badge, blue primary CTA, secondary alternate action.
+      </div>
+    </div>
+
+    <!-- Arrow 2→3 -->
+    <div class="arrow-col">
+      <svg width="56" height="24" viewBox="0 0 56 24" fill="none">
+        <path d="M4 12 H48" stroke="#1a73e8" stroke-width="1.5"/>
+        <path d="M42 7l8 5-8 5" stroke="#1a73e8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </div>
+
+    <!-- Screen 3: Handoff -->
+    <div class="flow-col">
+      <div class="screen-badge">
+        <div class="screen-num">3</div>
+        <div class="screen-label">Handoff</div>
+      </div>
+      <div class="phone" style="height:340px;">
+        <div class="phone-sb" style="background:#1a73e8;color:white;"><span>9:41</span><span>●●●</span></div>
+        <div class="handoff-screen" style="height:316px;">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="22" stroke="white" stroke-width="1.5" opacity="0.35"/>
+            <path d="M24 5C13.5 5 5 13.5 5 24C5 34.5 13.5 43 24 43C34.5 43 43 34.5 43 24" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M24 14L24 24L31 31" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="39" cy="12" r="6" fill="white" opacity="0.9"/>
+            <path d="M36.5 12l2 2L41 10" stroke="#1a73e8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div style="color:white;font-size:13px;font-weight:500;text-align:center;line-height:1.5;">Opening Google Maps…</div>
+          <div style="color:rgba(255,255,255,0.6);font-size:11px;text-align:center;line-height:1.5;">Route saved to history</div>
+        </div>
+      </div>
+      <div class="annotation">
+        <strong>Deep link handoff</strong>
+        History locked. Google Maps opens with route and waypoints pre-loaded.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Branching actions</div>
+
+  <div class="branch-row">
+
+    <!-- Settings -->
+    <div class="flow-col" style="align-items:flex-start;">
+      <div class="screen-badge">
+        <div class="screen-num opt">S</div>
+        <div class="screen-label opt">Settings</div>
+      </div>
+      <div class="branch-note">Accessed from home screen gear icon before entering a destination</div>
+      <div style="display:flex;align-items:flex-start;gap:20px;">
+        <div class="phone" style="width:180px;">
+          <div class="phone-sb" style="background:#f5f5f5;"><span>9:41</span><span>●●●</span></div>
+          <div style="background:#f5f5f5;padding:8px 10px 14px;">
+            <div style="display:flex;align-items:center;gap:7px;margin-bottom:12px;">
+              <div style="width:20px;height:20px;background:white;border-radius:50%;border:0.5px solid #ddd;display:flex;align-items:center;justify-content:center;">
+                <svg width="9" height="9" viewBox="0 0 10 10" fill="none"><path d="M7 3L3 5L7 7" stroke="#333" stroke-width="1.2" stroke-linecap="round"/></svg>
+              </div>
+              <div style="font-size:12px;font-weight:500;color:#1a1a1a;">Settings</div>
+            </div>
+
+            <div class="section-chip">Route variation</div>
+            <div class="settings-card">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
+                <div>
+                  <div style="font-size:9px;font-weight:500;color:#1a1a1a;">Time tolerance</div>
+                  <div style="font-size:8px;color:#aaa;">Max minutes to add</div>
+                </div>
+                <div class="stepper">
+                  <div class="stepper-btn">−</div>
+                  <div class="stepper-val">10</div>
+                  <div class="stepper-btn">+</div>
+                </div>
+              </div>
+              <div style="font-size:8px;color:#aaa;line-height:1.5;">Okay adding up to <span style="color:#1a73e8;">10</span> min for a new route. Min 5 min.</div>
+            </div>
+
+            <div class="section-chip">Route history</div>
+            <div class="settings-card">
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                <div style="font-size:9px;font-weight:500;color:#1a1a1a;">Saved routes</div>
+                <div style="font-size:9px;color:#aaa;font-family:'DM Mono',monospace;">3 / 5</div>
+              </div>
+              <div class="history-bar-track"><div class="history-bar-fill" style="width:60%;"></div></div>
+              <div class="pill-row">
+                <div class="pill">Today 8:42am</div>
+                <div class="pill">Yesterday</div>
+                <div class="pill old">Mon</div>
+              </div>
+            </div>
+
+            <div class="section-chip">Data</div>
+            <div class="btn-danger">Clear route history</div>
+
+            <div class="section-chip">About</div>
+            <div class="settings-card">
+              <div class="settings-row"><div class="settings-label">Version</div><div class="settings-val">1.0.0</div></div>
+              <div class="settings-row"><div class="settings-label">Storage</div><div class="settings-val">On-device</div></div>
+              <div class="settings-row"><div class="settings-label">Navigation</div><div class="settings-val">Google Maps</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="annotation" style="margin-top:32px;">
+          <strong>Optional detour</strong>
+          Adjust tolerance or clear history before starting a trip. Does not affect in-progress routes.
+        </div>
+      </div>
+    </div>
+
+    <!-- Edge Case -->
+    <div class="flow-col" style="align-items:flex-start;">
+      <div class="screen-badge">
+        <div class="screen-num edge">!</div>
+        <div class="screen-label edge">No route found</div>
+      </div>
+      <div class="branch-note">Replaces route preview when all candidates match recent history</div>
+      <div style="display:flex;align-items:flex-start;gap:20px;">
+        <div class="phone" style="width:180px;">
+          <div class="phone-sb"><span>9:41</span><span>●●●</span></div>
+          <div class="map-area" style="height:148px;">
+            <svg width="100%" height="100%" viewBox="0 0 180 148" preserveAspectRatio="none">
+              <rect x="0" y="55" width="180" height="7" fill="#f5f3ea" stroke="#ccc9b3" stroke-width="0.4"/>
+              <rect x="0" y="108" width="180" height="9" fill="#fff" stroke="#bbb89f" stroke-width="0.5"/>
+              <rect x="62" y="0" width="9" height="148" fill="#fff" stroke="#bbb89f" stroke-width="0.5"/>
+              <rect x="124" y="0" width="7" height="148" fill="#f5f3ea" stroke="#ccc9b3" stroke-width="0.4"/>
+              <rect x="22" y="10" width="28" height="32" rx="2" fill="#cac8b5"/>
+              <rect x="78" y="6" width="32" height="36" rx="2" fill="#c8d9b0"/>
+              <path d="M28,148 L28,112 L62,112 L62,59 L112,59 L112,112 L147,112 L147,148" stroke="#aaa" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 5" opacity="0.5"/>
+              <circle cx="28" cy="148" r="5" fill="#aaa" opacity="0.5"/>
+              <circle cx="147" cy="112" r="7" fill="#aaa" opacity="0.5"/>
+              <circle cx="147" cy="112" r="4" fill="white"/>
+            </svg>
+          </div>
+          <div class="sheet">
+            <div class="handle"></div>
+            <div class="dest-row">
+              <div class="dest-dot"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M6 1C4 1 2.5 2.5 2.5 4.3C2.5 6.6 6 11 6 11C6 11 9.5 6.6 9.5 4.3C9.5 2.5 8 1 6 1ZM6 5.8C5.2 5.8 4.5 5.1 4.5 4.3C4.5 3.5 5.2 2.8 6 2.8C6.8 2.8 7.5 3.5 7.5 4.3C7.5 5.1 6.8 5.8 6 5.8Z" fill="#1a73e8"/></svg></div>
+              <div><div class="dest-name">Anthropic HQ</div><div class="dest-addr">760 Market St, SF</div></div>
+            </div>
+            <div class="stat-pills">
+              <div class="stat-pill"><div class="stat-val">22</div><div class="stat-unit">min</div></div>
+              <div class="stat-pill"><div class="stat-val">7.8</div><div class="stat-unit">miles</div></div>
+              <div class="stat-pill"><div class="stat-val">10:03</div><div class="stat-unit">arrival</div></div>
+            </div>
+            <div class="warn-banner">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none" style="flex-shrink:0;margin-top:1px;"><path d="M6 1L11.5 11H0.5L6 1Z" stroke="#854f0b" stroke-width="0.9" fill="#faeeda"/><path d="M6 5v2.5" stroke="#854f0b" stroke-width="0.9" stroke-linecap="round"/><circle cx="6" cy="9" r="0.6" fill="#854f0b"/></svg>
+              No new route found. Showing fastest option instead.
+            </div>
+            <div class="badge-used">Previously used route</div>
+            <div class="btn-primary" style="color:white;">Start in Google Maps</div>
+            <div style="font-size:8px;color:#aaa;text-align:center;margin-top:5px;">Try increasing your time tolerance in settings</div>
+          </div>
+        </div>
+        <div class="annotation warn" style="margin-top:32px;">
+          <strong>Edge case</strong>
+          Amber banner, grey dashed route, "Previously used route" badge. Hints to raise tolerance.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Design decisions</div>
+  <div class="notes-grid">
+    <div class="note-card">
+      <div class="note-card-title">Route status badge</div>
+      <div class="note-card-body">The only explicit novelty signal shown to the user. "New route" appears in blue on the normal preview screen; "Previously used route" appears in grey on the edge case screen. No further explanation is given — the variation is otherwise silent.</div>
+    </div>
+    <div class="note-card">
+      <div class="note-card-title">History commits at "Start"</div>
+      <div class="note-card-body">"Try a different route" can be tapped any number of times without affecting stored history. History is only written the moment the user taps "Start in Google Maps" — not before, not after. Reveer has no visibility into the trip once Google Maps takes over.</div>
+    </div>
+    <div class="note-card">
+      <div class="note-card-title">Tolerance lives in Settings only</div>
+      <div class="note-card-body">Time tolerance is not exposed on the route preview screen. Users who want to adjust it must go to Settings from the home screen before entering a destination. This keeps the preview screen focused on the single decision: start or try again.</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">Reveer · Screen flow v1.4</div>
+    <div class="footer-right">April 9, 2026 · Draft</div>
+  </div>
+
+</div>
+</body>
+</html>
