@@ -14,6 +14,9 @@ As a daily commuter, I want to see the selected route displayed on a map with tr
 ## PRD Reference
 Section 4.5 — Route Preview Screen; Section 5.3 — Key Screens (Route Preview); Section 5.4 — What the App Does and Does NOT Show
 
+## Flow Reference
+Screen 2 — Route Preview (Primary Flow): bottom sheet overlay on the map showing destination name/address, three stat pills (time, distance, arrival), "New route" badge in blue, "Start in Google Maps" primary button, and "Try a different route" secondary button.
+
 ## Relevant ADRs
 - ADR-001: Frontend Stack — React, TypeScript, Vite — the preview screen is a React component.
 - ADR-007: Navigation Handed Off to Google Maps via Deep Link — the "Start in Google Maps" button is the primary CTA; it triggers the deep link handoff (story 006).

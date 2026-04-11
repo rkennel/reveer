@@ -14,6 +14,9 @@ As a daily commuter, I want to see my recently visited destinations on the home 
 ## PRD Reference
 Section 4.6 — Origin and Destination Input; Section 5.3 — Key Screens (Home)
 
+## Flow Reference
+Screen 1 — Home (Primary Flow): recent destinations appear below the search bar on the home screen. The flow shows two example entries ("Anthropic HQ" and "Oakland Whole Foods"), each with a place name and secondary address line, before the user opens the search input.
+
 ## Relevant ADRs
 - ADR-003: localStorage Only — No Backend at v1 — recent destinations are stored in a separate localStorage key; no server call is made.
 - ADR-009: No User Accounts or Cloud Sync at v1 — recent destinations are device-local and not synced across devices.

@@ -14,6 +14,9 @@ As a daily commuter, I want to open Reveer and immediately see a full-screen map
 ## PRD Reference
 Section 4.1 — Route Request and Display; Section 5.3 — Key Screens (Home)
 
+## Flow Reference
+Screen 1 — Home (Primary Flow): full-screen map with floating "Where to?" search bar, current location indicator, and settings gear icon top-right.
+
 ## Relevant ADRs
 - ADR-001: Frontend Stack — React, TypeScript, Vite — the home screen is implemented as a React component with TypeScript.
 - ADR-008: No PWA Service Worker at v1 — the app requires an active internet connection; no offline fallback exists.

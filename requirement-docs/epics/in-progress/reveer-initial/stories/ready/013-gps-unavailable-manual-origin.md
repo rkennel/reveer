@@ -13,6 +13,9 @@ As a daily commuter, I want to be prompted to enter my starting location manuall
 ## PRD Reference
 Section 4.6 — Origin and Destination Input; Section 7 — Constraints and Edge Cases (GPS unavailable)
 
+## Flow Reference
+Screen 1 — Home (Primary Flow): this edge case occurs before or at the home screen when geolocation fails. The flow does not depict a separate GPS error screen — the recovery (manual origin entry) should be handled inline within the home screen experience.
+
 ## Relevant ADRs
 - ADR-003: localStorage Only — No Backend at v1 — manual origin entry uses Google Places Autocomplete; no Reveer server is involved.
 - ADR-006: 150m Grid Normalization for Origin/Destination Keys — the manually entered origin is normalized the same way as a GPS-detected origin before constructing the localStorage key.

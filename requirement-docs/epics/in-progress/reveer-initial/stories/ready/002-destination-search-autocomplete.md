@@ -14,6 +14,9 @@ As a daily commuter, I want to type a destination into a search bar and see auto
 ## PRD Reference
 Section 4.6 — Origin and Destination Input; Section 5.3 — Key Screens (Destination Search)
 
+## Flow Reference
+Screen 1 — Home (Primary Flow): the "Where to?" search bar on the home screen is the entry point for destination search. The flow shows recent destinations listed below the search bar as part of the same home screen layout.
+
 ## Relevant ADRs
 - ADR-002: Use Google Routes API, Not Legacy Directions API — destination selection feeds into the Routes API call; Places Autocomplete is the input mechanism.
 - ADR-003: localStorage Only — No Backend at v1 — no Reveer-owned server is called; only Google APIs are used.

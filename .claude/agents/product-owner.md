@@ -66,6 +66,9 @@ As a {type of user}, I want {goal} so that {benefit}.
 ## PRD Reference
 Section {X.X} — {Section Title}
 
+## Flow Reference
+{Screen name and section in Reveer-Flow.html — e.g. "Screen 1 — Home (Primary Flow)" or "Settings (Branching Actions)". Omit this section for stories with no corresponding screen in the flow document.}
+
 ## Relevant ADRs
 - ADR-{NNN}: {Title} — {one line on why it applies}
 

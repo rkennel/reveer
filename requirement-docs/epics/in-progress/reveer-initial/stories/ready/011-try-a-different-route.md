@@ -14,6 +14,9 @@ As a daily commuter, I want to request a different route from the preview screen
 ## PRD Reference
 Section 4.5 — Route Preview Screen; Section 5.3 — Key Screens (Route Preview); Flow design decisions ("History commits at Start")
 
+## Flow Reference
+Screen 2 — Route Preview (Primary Flow): the "Try a different route" secondary button sits below the "Start in Google Maps" primary button in the bottom sheet. The flow design decisions section explicitly states history is only committed at "Start" tap, not on alternate route requests.
+
 ## Relevant ADRs
 - ADR-004: Route History Committed at "Start" Tap, Not Trip Completion — history is not written when "Try a different route" is tapped; only "Start" triggers a write.
 - ADR-005: 80% Polyline Spatial Overlap Defines "Same Route" — the re-run uses the same similarity threshold to score the next candidate.

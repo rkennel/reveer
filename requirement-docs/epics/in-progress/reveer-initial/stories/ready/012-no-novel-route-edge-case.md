@@ -14,6 +14,9 @@ As a daily commuter, I want to be clearly informed when Reveer cannot find a rou
 ## PRD Reference
 Section 4.3 — Route Variation Algorithm (Step 4 fallback); Section 5.3 — Key Screens (No Route Available); Section 7 — Constraints and Edge Cases (Only one route exists; All alternate routes exceed tolerance)
 
+## Flow Reference
+Edge Case — ! No Route Found (Branching Actions): replaces the normal route preview when all candidates match recent history. Flow shows grey dashed route polyline, amber warning banner, "Previously used route" badge in grey, "Start in Google Maps" button still present, and hint text to increase tolerance. The "Try a different route" button is absent in this state.
+
 ## Relevant ADRs
 - ADR-004: Route History Committed at "Start" Tap, Not Trip Completion — even in the fallback state, history is written when "Start" is tapped.
 - ADR-005: 80% Polyline Spatial Overlap Defines "Same Route" — the fallback is triggered when all candidates score above the 80% similarity threshold against stored history.

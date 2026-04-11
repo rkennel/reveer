@@ -14,6 +14,9 @@ As a daily commuter, I want tapping "Start in Google Maps" to immediately open G
 ## PRD Reference
 Section 4.4 — Navigation Handoff to Google Maps; Section 5.3 — Key Screens (Handoff)
 
+## Flow Reference
+Screen 3 — Handoff (Primary Flow): full blue screen showing "Opening Google Maps… Route saved to history" transition state. The flow shows this as the terminal screen in the primary flow before Google Maps takes over.
+
 ## Relevant ADRs
 - ADR-007: Navigation Handed Off to Google Maps via Deep Link — defines the exact deep link format and the two responsibilities of the "Start" button handler.
 - ADR-004: Route History Committed at "Start" Tap, Not Trip Completion — history is written before the deep link is opened (covered in story 007; this story verifies the handoff behavior).

@@ -14,6 +14,9 @@ As a daily commuter, I want to access a settings screen from the home screen so 
 ## PRD Reference
 Section 4.1a — Time Tolerance Setting; Section 5.3 — Key Screens (Settings)
 
+## Flow Reference
+Settings — S (Branching Actions): accessed via the gear icon on the home screen. Flow shows four sections: Route Variation (time tolerance stepper), Route History (count + progress bar + timestamps), Data (clear history button), and About (version, storage type, navigation provider).
+
 ## Relevant ADRs
 - ADR-001: Frontend Stack — React, TypeScript, Vite — the Settings screen is a React component.
 - ADR-003: localStorage Only — No Backend at v1 — all settings and history data read by this screen come from localStorage; no server call is made.
