@@ -1,3 +1,5 @@
+import HomeScreen from './HomeScreen'
+
 export default function App() {
-  return <div>Reveer</div>
+  return <HomeScreen />
 }

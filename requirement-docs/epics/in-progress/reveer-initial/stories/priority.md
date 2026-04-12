@@ -1,6 +1,6 @@
 # Story Priority — reveer-initial
 
-1. [001: Home Screen — Map and Geolocation](ready/001-home-screen-map-and-geolocation.md) — READY
+1. [001: Home Screen — Map and Geolocation](done/001-home-screen-map-and-geolocation.md) — DONE
 2. [016: CI Pipeline — GitHub Actions](ready/016-ci-github-actions.md) — READY
 3. [008: Origin/Destination Grid Normalization](ready/008-origin-destination-normalization.md) — READY
 4. [007: Route History Storage and Persistence](ready/007-route-history-storage.md) — READY
